@@ -3,16 +3,21 @@
 
 node {
     stage("Build") {
-        echo "Building...."
-        echo commonCI.GIT_URL_TOOLS
-        // Clone CI repo to workspace
+        echo "Building Zephyr RTOS application workspace..."
+        echo "CI workspace for TOOLS: " + commonCI.GIT_URL_TOOLS
+        // Clone CI repo to workspace TOOLS
         def cmd = "${commonCI.DEVOPS_CLONE_CMD}"
         sh "cd ${commonCI.BUILD_DIR} && bash -c \"${cmd}\""
+        // Install Application into Zephyr basic installation
+        sh "cd ${commonCI.CI_BUILD_DIR}"
+        sh "cd .venv && source bin/activate && cd .."
+        sh "west init -m ${GIT_URL_ZEPH_APP} --mr main customer-application1"
+        sh "cd customer-application1 && west update"
     }
     stage("Test") {
-        echo "Testing...."
+        echo "Testing Zephyr RTOS application..."
     }
     stage("Deploy") {
-        echo "Deploying...."
+        echo "Deploying Zephyr RTOS application..."
     }
 }
