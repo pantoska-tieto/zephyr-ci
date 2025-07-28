@@ -13,4 +13,4 @@ def DEVOPS_CLONE_CMD = "/usr/bin/git clone ${GIT_URL_TOOLS} tools --single-branc
 
 // Test with local Zephyr development workspace installation
 @groovy.transform.Field
-def CI_BUILD_DIR = "/home/peter/zephyrproject-ci"
+def CI_BUILD_DIR = "/tmp/zephyrproject-ci"
