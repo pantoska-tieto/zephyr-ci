@@ -11,7 +11,7 @@ node {
         // Install Application into Zephyr basic installation
         sh "cd ${commonCI.CI_BUILD_DIR}"
         // sh ". ./bin/activate && cd ${commonCI.CI_BUILD_DIR}"
-        sh "bash venv-activate.sh"
+        sh "bash ${commonCI.CI_BUILD_DIR}/venv-activate.sh"
         sh "cd ${commonCI.CI_BUILD_DIR} && west init -m ${GIT_URL_ZEPH_APP} --mr main customer-application1"
         sh "cd ${commonCI.CI_BUILD_DIR}/customer-application1 && west update"
     }
