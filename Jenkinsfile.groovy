@@ -10,7 +10,7 @@ node {
         sh "cd ${commonCI.BUILD_DIR} && bash -c \"${cmd}\""
         // Install Application into Zephyr basic installation
         sh "cd ${commonCI.CI_BUILD_DIR}/.venv"
-        sh ". bin/activate && cd ${commonCI.CI_BUILD_DIR}"
+        sh ". ./bin/activate && cd ${commonCI.CI_BUILD_DIR}"
         sh "west init -m ${GIT_URL_ZEPH_APP} --mr main customer-application1"
         sh "cd ${commonCI.CI_BUILD_DIR}/customer-application1 && west update"
     }
