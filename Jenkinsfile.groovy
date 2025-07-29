@@ -12,8 +12,8 @@ def ci_build() {
     // Clone CI repo to workspace TOOLS
     def cmd = "${commonCI.DEVOPS_CLONE_CMD}"
     sh "cd ${commonCI.BUILD_DIR} && bash -c \"${cmd}\""
-    def cmd = "${python} ${build_script}"
-    def result = sh "bash -c \"${cmd}\""
+    def cmd2 = "${python} ${build_script}"
+    def result = sh "bash -c \"${cmd2}\""
 
     sh """
     cd ${commonCI.CI_BUILD_DIR}
