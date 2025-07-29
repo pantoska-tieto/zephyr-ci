@@ -19,7 +19,7 @@ def ci_build() {
     sh """
     cd ${commonCI.CI_BUILD_DIR}
     . ${commonCI.CI_BUILD_DIR}/.venv/bin/activate
-    west init -m ${GIT_URL_ZEPH_APP} --mr main customer-application1
+    west init -m ${commonCI.GIT_URL_ZEPH_APP} --mr main customer-application1
     cd ${commonCI.CI_BUILD_DIR}/customer-application1 && west update
     """
 
