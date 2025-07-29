@@ -1,9 +1,9 @@
 // Import common parameters
 @Library("commonCI") _
 
-flows = commonCI.BUILD_DIR + "/" + commonCI.TOOLS_DIR + "/" + commonCI.FLOWS_DIR
-build_dir = commonCI.BUILD_DIR
-python = commonCI.PYTHON_PATH
+def flows = commonCI.BUILD_DIR + "/" + commonCI.TOOLS_DIR + "/" + commonCI.FLOWS_DIR
+def build_dir = commonCI.BUILD_DIR
+def python = commonCI.PYTHON_PATH
 
 
 def ci_build() {
@@ -30,7 +30,7 @@ def ci_build() {
 node {
     stage("Build") {
         echo "Building Zephyr RTOS application workspace..."
-        sh "mkdir ${build_dir}"
+        sh "mkdir -p ${build_dir}"
         try {
                 ci_build()
             } catch(err) {
