@@ -1,7 +1,7 @@
 // Import common parameters
 @Library("commonCI") _
 
-flows = commonCI.FLOWS_DIR
+flows = commonCI._DIR + "/" + commonCI.TOOLS_DIR + "/" + commonCI.FLOWS_DIR
 build_dir = commonCI.BUILD_DIR
 python = commonCI.PYTHON_PATH
 
