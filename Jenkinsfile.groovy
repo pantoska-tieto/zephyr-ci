@@ -10,22 +10,41 @@ python = commonCI.PYTHON_PATH
 def ci_build() {
     def build_script = "${flows}/ci_build.py"
     echo "CI workspace for TOOLS: " + commonCI.BUILD_DIR + "/" + commonCI.TOOLS_DIR
-    // Clone CI repo to workspace TOOLS
+    // Clone TOOLS repo to workspace
     def cmd = "${commonCI.DEVOPS_CLONE_CMD}"
     sh "cd ${commonCI.BUILD_DIR} && bash -c \"${cmd}\""
+    // Invoke external python script
     def cmd2 = "${python} ${build_script}"
     def result = sh "bash -c \"${cmd2}\""
 
+    // Initiate Zephyr project
     sh """
     cd ${commonCI.CI_BUILD_DIR}
     . ${commonCI.CI_BUILD_DIR}/.venv/bin/activate
     west init -m ${commonCI.GIT_URL_ZEPH_APP} --mr main customer-application1
     cd ${commonCI.CI_BUILD_DIR}/customer-application1 && west update
     """
+}
 
-    // sh "bash ${commonCI.CI_BUILD_DIR}/venv-activate.sh"
-    // sh "cd ${commonCI.CI_BUILD_DIR} && west init -m ${GIT_URL_ZEPH_APP} --mr main customer-application1"
-    // sh "cd ${commonCI.CI_BUILD_DIR}/customer-application1 && west update"
+def ci_test() {
+    def test_script = "${flows}/ci_test.py"
+    // Invoke external python script
+    def cmd = "${python} ${test_script}"
+    def result = sh "bash -c \"${cmd}\""
+}
+
+def ci_deploy() {
+    def deploy_script = "${flows}/ci_deploy.py"
+    // Invoke external python script
+    def cmd = "${python} ${deploy_script}"
+    def result = sh "bash -c \"${cmd}\""
+}
+
+def ci_report() {
+    def report_script = "${flows}/ci_report.py"
+    // Invoke external python script
+    def cmd = "${python} ${report_script}"
+    def result = sh "bash -c \"${cmd}\""
 }
 
 node {
@@ -37,13 +56,30 @@ node {
             } catch(err) {
                 echo err.getMessage()
             }
-        // sh ". ./bin/activate && cd ${commonCI.CI_BUILD_DIR}"
-        
     }
     stage("Test") {
         echo "Testing Zephyr RTOS application..."
+        try {
+                ci_test()
+            } catch(err) {
+                echo err.getMessage()
+            }
     }
     stage("Deploy") {
         echo "Deploying Zephyr RTOS application..."
+        try {
+                ci_deploy()
+            } catch(err) {
+                echo err.getMessage()
+            }
     }
+    stage("Report") {
+        echo "Sending a report from CI job..."
+        try {
+                ci_report()
+            } catch(err) {
+                echo err.getMessage()
+            }
+    }
+
 }
