@@ -17,7 +17,7 @@ def DEVOPS_CLONE_CMD = "/usr/bin/git clone ${GIT_URL_TOOLS} ${TOOLS_DIR} --singl
 
 // Local test
 @groovy.transform.Field
-def CI_BUILD_DIR = "/tmp/zephyrproject_ci"
+def CI_BUILD_DIR = "/tmp/zephyrproject-ci"
 
 // Applications
 @groovy.transform.Field
